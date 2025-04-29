@@ -45,7 +45,7 @@ export class InvestmentsController {
 
   @Delete(':id')
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.INVESTOR, Role.ADMIN)
+  @Roles(Role.INVESTOR)
   remove(@Param('id') id: string, @CurrentUser() user: User) {
     return this.investmentsService.remove(id, user.id, user.role);
   }

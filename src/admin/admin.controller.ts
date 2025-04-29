@@ -29,11 +29,4 @@ export class AdminController {
   getAllInvestments() {
     return this.adminService.getAllInvestments();
   }
-
-  @Get('projects')
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.ADMIN)
-  getAllProjects() {
-    return this.adminService.getAllProjects();
-  }
 }

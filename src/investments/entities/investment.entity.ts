@@ -16,6 +16,7 @@ export class Investment {
 
   @ManyToOne(() => User, (user) => user.investments)
   @JoinColumn({ name: 'investor_id' })
+  @Exclude()
   investor: User;
 
   @Column()

@@ -26,14 +26,8 @@ export class InterestsController {
   }
 
   @Get()
-  @UseGuards(JwtAuthGuard)
   findAll() {
     return this.interestsService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.interestsService.findOne(id);
   }
 
   @Delete(':id')
