@@ -1,10 +1,12 @@
 import {
   IsArray,
   IsEmail,
+  IsEnum,
   IsOptional,
   IsString,
   IsUUID,
 } from 'class-validator';
+import { Role } from '../../common/enums/role.enum';
 
 export class UpdateUserDto {
   @IsOptional()
@@ -18,6 +20,10 @@ export class UpdateUserDto {
   @IsOptional()
   @IsEmail()
   email?: string;
+
+  @IsOptional()
+  @IsEnum(Role)
+  role?: Role;
 
   @IsOptional()
   @IsArray()
