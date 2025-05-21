@@ -18,7 +18,6 @@ export class AuthController {
     schema: {
       type: 'object',
       properties: {
-        access_token: { type: 'string' },
         user: {
           type: 'object',
           properties: {
@@ -29,6 +28,7 @@ export class AuthController {
             role: { type: 'string' },
           },
         },
+        message: { type: 'string' },
       },
     },
   })

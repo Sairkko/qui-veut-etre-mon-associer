@@ -32,11 +32,8 @@ export class AuthService {
       password: hashedPassword,
     });
 
-    // Génération du token JWT
-    const payload = { sub: user.id, email: user.email, role: user.role };
-
+    // Renvoyer uniquement les informations de l'utilisateur sans token
     return {
-      access_token: this.jwtService.sign(payload),
       user: {
         id: user.id,
         firstName: user.firstName,
@@ -44,6 +41,7 @@ export class AuthService {
         email: user.email,
         role: user.role,
       },
+      message: 'Inscription réussie, vous pouvez maintenant vous connecter',
     };
   }
 
