@@ -51,7 +51,7 @@ export class Project {
   category: string;
 
   @ApiHideProperty()
-  @ManyToOne(() => User, (user) => user.projects)
+  @ManyToOne(() => User, (user) => user.projects, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'owner_id' })
   @Exclude()
   owner: User;

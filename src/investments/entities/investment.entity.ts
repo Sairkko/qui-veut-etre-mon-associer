@@ -21,7 +21,7 @@ export class Investment {
   id: string;
 
   @ApiHideProperty()
-  @ManyToOne(() => User, (user) => user.investments)
+  @ManyToOne(() => User, (user) => user.investments, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'investor_id' })
   @Exclude()
   investor: User;
