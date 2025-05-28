@@ -167,7 +167,7 @@ http://localhost:3000/api/docs
 
 | Méthode | Endpoint | Description | Rôle requis |
 |---------|----------|-------------|-------------|
-| `POST` | `/api/seeds` | Peupler la base de données | Admin |
+| `POST` | `/api/seeds` | Peupler la base de données | |
 
 ## 🔐 Authentification
 
