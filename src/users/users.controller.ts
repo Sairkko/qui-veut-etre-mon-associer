@@ -57,18 +57,21 @@ export class UsersController {
   @Roles(Role.ADMIN)
   @ApiBearerAuth('JWT')
   @ApiOperation({
-    summary: "Mettre à jour le profil de l'utilisateur connecté",
+    summary: 'Mettre à jour un utilisateur par son ID (admin uniquement)',
   })
+  @ApiParam({ name: 'id', description: "Identifiant de l'utilisateur" })
   @ApiBody({ type: UpdateUserDto })
   @ApiResponse({
     status: 200,
-    description: 'Profil mis à jour avec succès',
+    description: 'Utilisateur mis à jour avec succès',
     type: User,
   })
   @ApiResponse({ status: 400, description: 'Données invalides' })
   @ApiResponse({ status: 401, description: 'Non autorisé' })
-  update(@CurrentUser() user: User, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(user.id, updateUserDto);
+  @ApiResponse({ status: 403, description: 'Accès interdit' })
+  @ApiResponse({ status: 404, description: 'Utilisateur non trouvé' })
+  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    return this.usersService.update(id, updateUserDto);
   }
 
   @Delete(':id')

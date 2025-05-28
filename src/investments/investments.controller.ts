@@ -67,11 +67,13 @@ export class InvestmentsController {
   @Roles(Role.INVESTOR, Role.ADMIN)
   @ApiBearerAuth('JWT')
   @ApiOperation({
-    summary: "Récupérer les investissements de l'utilisateur connecté",
+    summary:
+      "Récupérer les investissements de l'utilisateur connecté (investisseur) OU tous les investissements (admin)",
   })
   @ApiResponse({
     status: 200,
-    description: "Liste des investissements de l'utilisateur",
+    description:
+      "Liste des investissements de l'utilisateur ou de tous les investissements",
     type: [Investment],
   })
   @ApiResponse({ status: 401, description: 'Non autorisé' })
@@ -80,29 +82,13 @@ export class InvestmentsController {
     description:
       'Accès interdit - réservé aux investisseurs et administrateurs',
   })
-  findByInvestor(@CurrentUser() user: User) {
+  findInvestments(@CurrentUser() user: User) {
+    // Si c'est un admin, retourner tous les investissements
+    if (user.role === Role.ADMIN) {
+      return this.investmentsService.findAll();
+    }
+    // Sinon, retourner seulement les investissements de l'utilisateur
     return this.investmentsService.findByInvestor(user.id);
-  }
-
-  @Get()
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.ADMIN)
-  @ApiBearerAuth('JWT')
-  @ApiOperation({
-    summary: 'Récupérer tous les investissements (admin uniquement)',
-  })
-  @ApiResponse({
-    status: 200,
-    description: 'Liste de tous les investissements',
-    type: [Investment],
-  })
-  @ApiResponse({ status: 401, description: 'Non autorisé' })
-  @ApiResponse({
-    status: 403,
-    description: 'Accès interdit - réservé aux administrateurs',
-  })
-  findAll() {
-    return this.investmentsService.findAll();
   }
 
   @Get('project/:id')

@@ -119,18 +119,17 @@ http://localhost:3000/api/docs
 
 #### Authentification (`/api/auth`)
 
-| Méthode | Endpoint | Description | Authentification |
-|---------|----------|-------------|------------------|
-| `POST` | `/api/auth/register` | Créer un nouveau compte | ✅ |
-| `POST` | `/api/auth/login` | Se connecter | ✅ |
+| Méthode | Endpoint | Description | Rôle requis |
+|---------|----------|-------------|-------------|
+| `POST` | `/api/auth/register` | Créer un nouveau compte utilisateur | Public |
+| `POST` | `/api/auth/login` | Connecter un utilisateur existant | Public |
 
 #### Utilisateurs (`/api/users`)
 
 | Méthode | Endpoint | Description | Rôle requis |
 |---------|----------|-------------|-------------|
 | `GET` | `/api/users` | Lister tous les utilisateurs | Admin |
-| `GET` | `/api/users/profile` | Récupérer son profil | Tous |
-| `PATCH` | `/api/users/profile` | Modifier son profil | Tous |
+| `PATCH` | `/api/users/:id` | Mettre à jour un utilisateur | Admin |
 | `DELETE` | `/api/users/:id` | Supprimer un utilisateur | Admin |
 | `GET` | `/api/users/interests` | Récupérer ses centres d'intérêt | Tous |
 | `POST` | `/api/users/interests` | Associer des centres d'intérêt | Tous |
@@ -160,8 +159,8 @@ http://localhost:3000/api/docs
 | Méthode | Endpoint | Description | Rôle requis |
 |---------|----------|-------------|-------------|
 | `POST` | `/api/interests` | Créer un centre d'intérêt | Admin |
-| `GET` | `/api/interests` | Lister les centres d'intérêt | Tous |
-| `GET` | `/api/interests/:id` | Récupérer un centre d'intérêt | Tous |
+| `GET` | `/api/interests` | Lister les centres d'intérêt | Public |
+| `GET` | `/api/interests/:id` | Récupérer un centre d'intérêt | Public |
 | `DELETE` | `/api/interests/:id` | Supprimer un centre d'intérêt | Admin |
 
 #### Seeding (`/api/seeds`)
@@ -182,7 +181,7 @@ L'API utilise l'authentification JWT. Pour accéder aux endpoints protégés :
 
 ```bash
 curl -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." \
-     http://localhost:3000/api/users/profile
+     http://localhost:3000/api/projects
 ```
 
 ## 🎯 Exemples d'utilisation
