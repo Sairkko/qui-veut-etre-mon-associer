@@ -26,7 +26,7 @@ export class InvestmentsService {
     createInvestmentDto: CreateInvestmentDto,
     userId: string,
   ): Promise<Investment> {
-    // Vérifier que l'utilisateur est un investisseur
+    // Vérifier que l'utilisateur est un investisseur ou un admin
     const user = await this.usersRepository.findOne({
       where: { id: userId },
     });
@@ -35,9 +35,9 @@ export class InvestmentsService {
       throw new NotFoundException(`Utilisateur avec l'ID ${userId} non trouvé`);
     }
 
-    if (user.role !== Role.INVESTOR) {
+    if (user.role !== Role.INVESTOR && user.role !== Role.ADMIN) {
       throw new ForbiddenException(
-        'Seuls les investisseurs peuvent investir dans un projet',
+        'Seuls les investisseurs et les administrateurs peuvent investir dans un projet',
       );
     }
 
@@ -46,8 +46,8 @@ export class InvestmentsService {
       createInvestmentDto.projectId,
     );
 
-    // Un investisseur ne peut pas investir dans son propre projet
-    if (project.ownerId === userId) {
+    // Un investisseur ne peut pas investir dans son propre projet (sauf admin)
+    if (project.ownerId === userId && user.role !== Role.ADMIN) {
       throw new BadRequestException(
         'Vous ne pouvez pas investir dans votre propre projet',
       );

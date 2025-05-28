@@ -34,7 +34,7 @@ export class ProjectsController {
 
   @Post()
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.ENTREPRENEUR)
+  @Roles(Role.ENTREPRENEUR, Role.ADMIN)
   @ApiBearerAuth('JWT')
   @ApiOperation({ summary: 'Créer un nouveau projet' })
   @ApiBody({ type: CreateProjectDto })
@@ -101,7 +101,7 @@ export class ProjectsController {
 
   @Patch(':id')
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.ENTREPRENEUR)
+  @Roles(Role.ENTREPRENEUR, Role.ADMIN)
   @ApiBearerAuth('JWT')
   @ApiOperation({ summary: 'Mettre à jour un projet' })
   @ApiParam({ name: 'id', description: 'Identifiant du projet' })

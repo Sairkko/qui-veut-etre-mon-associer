@@ -32,7 +32,7 @@ export class InvestmentsController {
 
   @Post()
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.INVESTOR)
+  @Roles(Role.INVESTOR, Role.ADMIN)
   @ApiBearerAuth('JWT')
   @ApiOperation({ summary: 'Créer un nouvel investissement' })
   @ApiBody({ type: CreateInvestmentDto })
@@ -64,7 +64,7 @@ export class InvestmentsController {
 
   @Get()
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.INVESTOR)
+  @Roles(Role.INVESTOR, Role.ADMIN)
   @ApiBearerAuth('JWT')
   @ApiOperation({
     summary: "Récupérer les investissements de l'utilisateur connecté",
@@ -77,7 +77,8 @@ export class InvestmentsController {
   @ApiResponse({ status: 401, description: 'Non autorisé' })
   @ApiResponse({
     status: 403,
-    description: 'Accès interdit - réservé aux investisseurs',
+    description:
+      'Accès interdit - réservé aux investisseurs et administrateurs',
   })
   findByInvestor(@CurrentUser() user: User) {
     return this.investmentsService.findByInvestor(user.id);
@@ -124,7 +125,7 @@ export class InvestmentsController {
 
   @Delete(':id')
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.INVESTOR)
+  @Roles(Role.INVESTOR, Role.ADMIN)
   @ApiBearerAuth('JWT')
   @ApiOperation({ summary: 'Supprimer un investissement' })
   @ApiParam({ name: 'id', description: "Identifiant de l'investissement" })

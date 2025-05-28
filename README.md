@@ -11,7 +11,7 @@
 - **Système de projets** avec création, modification et recommandations
 - **Gestion des investissements** avec suivi des montants
 - **Centres d'intérêt** pour personnaliser les recommandations
-- **Interface d'administration** pour la gestion globale
+- **Interface d'administration** avec privilèges complets (création, modification, suppression de tous les éléments)
 - **Documentation API Swagger** intégrée
 
 ## 🛠️ Technologies utilisées
@@ -92,7 +92,7 @@ Après avoir exécuté le seeding (`npm run seed`), les comptes suivants sont di
 - **Email** : `admin@example.com`
 - **Mot de passe** : `password123`
 - **Rôle** : `admin`
-- **Permissions** : Accès complet à toutes les fonctionnalités
+- **Permissions** : Accès complet à toutes les fonctionnalités (création, modification, suppression de projets, investissements, utilisateurs et centres d'intérêt)
 
 ### 💼 Comptes Entrepreneurs
 - **Mot de passe** : `password123` (pour tous)
@@ -139,7 +139,7 @@ http://localhost:3000/api/docs
 
 | Méthode | Endpoint | Description | Rôle requis |
 |---------|----------|-------------|-------------|
-| `POST` | `/api/projects` | Créer un nouveau projet | Entrepreneur |
+| `POST` | `/api/projects` | Créer un nouveau projet | Entrepreneur/Admin |
 | `GET` | `/api/projects` | Lister tous les projets | Tous |
 | `GET` | `/api/projects/recommended` | Projets recommandés | Tous |
 | `GET` | `/api/projects/:id` | Récupérer un projet | Tous |
@@ -150,9 +150,10 @@ http://localhost:3000/api/docs
 
 | Méthode | Endpoint | Description | Rôle requis |
 |---------|----------|-------------|-------------|
-| `POST` | `/api/investments` | Créer un investissement | Investisseur |
-| `GET` | `/api/investments` | Lister ses investissements | Investisseur |
+| `POST` | `/api/investments` | Créer un investissement | Investisseur/Admin |
+| `GET` | `/api/investments` | Lister ses investissements (investisseur/admin) OU tous les investissements (admin) | Investisseur/Admin |
 | `GET` | `/api/investments/project/:id` | Investissements d'un projet | Tous |
+| `DELETE` | `/api/investments/:id` | Supprimer un investissement | Investisseur/Admin |
 
 #### Centres d'intérêt (`/api/interests`)
 
@@ -160,15 +161,8 @@ http://localhost:3000/api/docs
 |---------|----------|-------------|-------------|
 | `POST` | `/api/interests` | Créer un centre d'intérêt | Admin |
 | `GET` | `/api/interests` | Lister les centres d'intérêt | Tous |
+| `GET` | `/api/interests/:id` | Récupérer un centre d'intérêt | Tous |
 | `DELETE` | `/api/interests/:id` | Supprimer un centre d'intérêt | Admin |
-
-#### Administration (`/api/admin`)
-
-| Méthode | Endpoint | Description | Rôle requis |
-|---------|----------|-------------|-------------|
-| `GET` | `/api/admin/users` | Lister tous les utilisateurs | Admin |
-| `DELETE` | `/api/admin/users/:id` | Supprimer un utilisateur | Admin |
-| `GET` | `/api/admin/investments` | Lister tous les investissements | Admin |
 
 #### Seeding (`/api/seeds`)
 
