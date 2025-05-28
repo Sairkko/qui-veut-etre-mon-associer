@@ -35,34 +35,26 @@ export class UsersController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.ADMIN)
   @ApiBearerAuth('JWT')
-  @ApiOperation({ summary: 'Récupérer tous les utilisateurs' })
+  @ApiOperation({
+    summary: 'Récupérer tous les utilisateurs (admin uniquement)',
+  })
   @ApiResponse({
     status: 200,
     description: 'Liste de tous les utilisateurs',
     type: [User],
   })
   @ApiResponse({ status: 401, description: 'Non autorisé' })
-  @ApiResponse({ status: 403, description: 'Accès interdit' })
+  @ApiResponse({
+    status: 403,
+    description: 'Accès interdit - réservé aux administrateurs',
+  })
   findAll() {
     return this.usersService.findAll();
   }
 
-  @Get('profile')
-  @UseGuards(JwtAuthGuard)
-  @ApiBearerAuth('JWT')
-  @ApiOperation({ summary: "Récupérer le profil de l'utilisateur connecté" })
-  @ApiResponse({
-    status: 200,
-    description: "Profil de l'utilisateur",
-    type: User,
-  })
-  @ApiResponse({ status: 401, description: 'Non autorisé' })
-  getProfile(@CurrentUser() user: User) {
-    return user;
-  }
-
-  @Patch('profile')
-  @UseGuards(JwtAuthGuard)
+  @Patch(':id')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
   @ApiBearerAuth('JWT')
   @ApiOperation({
     summary: "Mettre à jour le profil de l'utilisateur connecté",

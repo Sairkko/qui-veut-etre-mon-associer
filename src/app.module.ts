@@ -8,7 +8,6 @@ import { AuthModule } from './auth/auth.module';
 import { ProjectsModule } from './projects/projects.module';
 import { InterestsModule } from './interests/interests.module';
 import { InvestmentsModule } from './investments/investments.module';
-import { AdminModule } from './admin/admin.module';
 import { SeedModule } from './database/seeds/seed.module';
 
 @Module({
@@ -35,7 +34,6 @@ import { SeedModule } from './database/seeds/seed.module';
     ProjectsModule,
     InterestsModule,
     InvestmentsModule,
-    AdminModule,
     SeedModule,
   ],
   controllers: [AppController],

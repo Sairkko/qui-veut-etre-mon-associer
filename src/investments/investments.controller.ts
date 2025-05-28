@@ -83,6 +83,27 @@ export class InvestmentsController {
     return this.investmentsService.findByInvestor(user.id);
   }
 
+  @Get()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.ADMIN)
+  @ApiBearerAuth('JWT')
+  @ApiOperation({
+    summary: 'Récupérer tous les investissements (admin uniquement)',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Liste de tous les investissements',
+    type: [Investment],
+  })
+  @ApiResponse({ status: 401, description: 'Non autorisé' })
+  @ApiResponse({
+    status: 403,
+    description: 'Accès interdit - réservé aux administrateurs',
+  })
+  findAll() {
+    return this.investmentsService.findAll();
+  }
+
   @Get('project/:id')
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth('JWT')
